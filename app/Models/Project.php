@@ -14,12 +14,16 @@ class Project extends Model
         'description',
         'image',
         'link',
-        'stack',
         'type_id'
     ];
 
     public function type()
     {
         return $this->belongsTo(Type::class);
+    }
+
+    public function stacks()
+    {
+        return $this->belongsToMany(Stack::class);
     }
 }
