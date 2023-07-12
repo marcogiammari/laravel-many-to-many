@@ -60,17 +60,20 @@
                 @enderror
 
             </div>
-            <div class="mb-3">
+            <div class="mb-3 d-flex gap-2">
 
-                <label for="selectStack" class="form-label">Stack</label>
-                <select id="selectStack" name="stack" class="form-select" aria-label="Default select example">
-                    <option selected disabled>Select main stack</option>
-                    @foreach ($stacks as $obj)
-                        <option @selected(old($obj->stack) == $obj->stack) value="{{ $obj->stack }}">{{ $obj->stack }}</option>
-                    @endforeach
-                </select>
+                {{-- @dump($project->stacks)
+                @dump($stacks) --}}
 
-                @error('stack')
+                @foreach ($stacks as $i => $stack)
+                    <div class="form-check">
+                        <label class="form-check-label" for="checkStack{{ $i }}">{{ $stack->name }}</label>
+                        <input class="form-check-input" type="checkbox" name="stacks[]" value="{{ $stack->id }}"
+                            id="checkStack{{ $i }}">
+                    </div>
+                @endforeach
+
+                @error('stacks')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
 
@@ -79,7 +82,7 @@
 
                 <label for="selectType" class="form-label">Type</label>
                 <select id="selectType" name="type_id" class="form-select" aria-label="Default select example">
-                    <option selected disabled>Select type</option>
+                    <option disabled>Select type</option>
                     @foreach ($types as $i => $type)
                         <option @selected(old($type) == $type) value="{{ $i + 1 }}">{{ $type }}</option>
                     @endforeach

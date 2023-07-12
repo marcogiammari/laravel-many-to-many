@@ -10,7 +10,15 @@
             <div class="col-12 col-lg-6 p-5 d-flex flex-column">
                 <h2>{{ $project->name }}</h2>
                 <hr>
-                <p><span class="fw-bold">Stack: </span>{{ $project->stack }}</p>
+                <p><span class="fw-bold">Stack: </span>
+                    @if (count($project->stacks) > 0)
+                        @foreach ($project->stacks as $stack)
+                            <span class="fst-italic">{{ $stack->name }}</span>
+                        @endforeach
+                    @else
+                        <span class="fst-italic">stack not available</span>
+                    @endif
+                </p>
                 <p>{{ $project->description }}</p>
                 <p><span class="fw-bold">Type: </span>{{ $project->type->name ?? 'Type not available' }}</p>
                 <div class="d-flex gap-2">

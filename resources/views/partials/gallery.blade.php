@@ -15,7 +15,13 @@
             </div>
             <div class="card-footer text-center">
                 <div class="pb-2">
-                    <small>{{ strtolower($project->stack) }}</small>
+                    @if (count($project->stacks) > 0)
+                        @foreach ($project->stacks as $stack)
+                            <small>{{ strtolower($stack->name) }}</small>
+                        @endforeach
+                    @else
+                        <small>stack not available</small>
+                    @endif
                 </div>
                 <div class="d-flex flex-column gap-2">
                     <a href="{{ route('admin.projects.show', $project) }}"><button

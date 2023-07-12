@@ -49,7 +49,7 @@
                 @enderror
 
             </div>
-            <div class="mb-3">
+            <div class="mb-4">
 
                 <label for="inputLink" class="form-label">Link</label>
                 <input name="link" type="text" class="form-control @error('link') is-invalid @enderror" id="inputLink"
@@ -59,17 +59,17 @@
                 @enderror
 
             </div>
-            <div class="mb-3">
+            <div class="mb-3 d-flex gap-2">
 
-                <label for="selectStack" class="form-label">Stack</label>
-                <select id="selectStack" name="stack" class="form-select" aria-label="Default select example">
-                    <option selected disabled>Select main stack</option>
-                    @foreach ($stacks as $obj)
-                        <option value="{{ $obj->stack }}">{{ $obj->stack }}</option>
-                    @endforeach
-                </select>
+                @foreach ($stacks as $i => $stack)
+                    <div class="form-check">
+                        <label class="form-check-label" for="checkStack{{ $i }}">{{ $stack->name }}</label>
+                        <input class="form-check-input" type="checkbox" name="stacks[]" value="{{ $stack->id }}"
+                            id="checkStack{{ $i }}">
+                    </div>
+                @endforeach
 
-                @error('stack')
+                @error('stacks')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
 

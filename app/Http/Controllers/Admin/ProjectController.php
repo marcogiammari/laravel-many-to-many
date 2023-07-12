@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin; // era "App\Http\Controllers"
-use App\Http\Controllers\Controller; // Controller di base da importare
-//...ecc
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Type;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Stack;
 
 class ProjectController extends Controller
 {
@@ -21,7 +21,6 @@ class ProjectController extends Controller
         // $projects = Project::all();
 
         // il compact('projects') non serve più, dopo aver condiviso i dati con tutte le view nel provider
-
         return view('admin.projects.index');
     }
 
@@ -32,8 +31,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $stacks = Project::select('stack')->distinct()->get();
         $types = Type::pluck('name')->all();
+        $stacks = Stack::all();
 
         return view('admin.projects.create', compact('stacks', 'types'));
     }
@@ -47,10 +46,10 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
-
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
+        $newProject->stacks()->attach($data['stacks']);
 
         return to_route('admin.projects.show', $newProject);
     }
@@ -75,8 +74,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $stacks = Project::select('stack')->distinct()->get();
         $types = Type::pluck('name')->all();
+        $stacks = Stack::all();
 
         return view('admin.projects.edit', compact('project', 'stacks', 'types'));
     }
@@ -93,6 +92,7 @@ class ProjectController extends Controller
         $valid_request = $request->validated();
         $project->fill($valid_request);
         $project->save();
+        $project->stacks()->sync($valid_request['stacks']);
 
         return to_route('admin.projects.show', $project);
     }
