@@ -62,14 +62,14 @@
             </div>
             <div class="mb-3 d-flex gap-2">
 
-                {{-- @dump($project->stacks)
-                @dump($stacks) --}}
+                @dump($project->stacks->contains($stacks[5]))
+                @dump($stacks[0]->name)
 
                 @foreach ($stacks as $i => $stack)
                     <div class="form-check">
                         <label class="form-check-label" for="checkStack{{ $i }}">{{ $stack->name }}</label>
                         <input class="form-check-input" type="checkbox" name="stacks[]" value="{{ $stack->id }}"
-                            id="checkStack{{ $i }}">
+                            id="checkStack{{ $i }}" @checked($project->stacks->contains($stack))>
                     </div>
                 @endforeach
 
