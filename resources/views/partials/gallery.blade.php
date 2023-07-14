@@ -4,7 +4,6 @@
             <div class="card-header h-100 p-0 d-flex justify-content-center">
                 <img class="w-100 h-100 rounded-t m-0 object-cover" src="{{ asset('storage/' . $project->image) }}"
                     alt="{{ $project->name }}">
-
             </div>
 
             <div class="card-body text-center">

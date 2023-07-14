@@ -51,6 +51,11 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <p>Preview</p>
+                <img class="w-25 object-contain rounded" id="preview" src="{{ asset('storage/' . $project->image) }}"
+                    alt="preview">
+            </div>
+            <div class="mb-3">
 
                 <label for="inputLink" class="form-label">Link</label>
                 <input name="link" type="text" class="form-control @error('link') is-invalid @enderror" id="inputLink"
@@ -97,4 +102,13 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+    <script>
+        inputFile.onchange = evt => {
+            const [file] = inputFile.files
+            if (file) {
+                preview.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 @endsection
