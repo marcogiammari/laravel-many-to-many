@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.projects.update', $project) }}" method="post">
+        <form action="{{ route('admin.projects.update', $project) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -41,14 +41,14 @@
 
             </div>
             <div class="mb-3">
+                <label for="inputFile" class="form-label">Image</label>
+                <input class="form-control" name="image" type="file" id="inputFile">
 
-                <label for="inputImage" class="form-label">Image URL</label>
-                <input name="image" type="text" class="form-control @error('image') is-invalid @enderror"
-                    id="inputImage" value="{{ old('image') ?? $project->image }}">
                 @error('image')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
-
             </div>
             <div class="mb-3">
 
@@ -71,10 +71,6 @@
                         
                             @elseif (!old('stacks') && $project->stacks->contains($stack))
                             {{ 'checked' }} @endif>
-
-
-
-
                     </div>
                 @endforeach
 

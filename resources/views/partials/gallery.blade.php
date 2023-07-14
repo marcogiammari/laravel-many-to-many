@@ -1,9 +1,8 @@
 @foreach ($projects as $project)
     <div class="col-12 col-md-6 col-lg-3 g-5">
         <div class="card h-100">
-            <div class="card-header p-0 d-flex justify-content-center">
-                <img class="w-100 rounded-t m-0 object-cover"
-                    src="{{ $project->image ?? Vite::asset('resources/images/image-not-available.jpg') }}"
+            <div class="card-header h-100 p-0 d-flex justify-content-center">
+                <img class="w-100 h-100 rounded-t m-0 object-cover" src="{{ asset('storage/' . $project->image) }}"
                     alt="{{ $project->name }}">
 
             </div>

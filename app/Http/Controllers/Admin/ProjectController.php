@@ -8,6 +8,7 @@ use App\Models\Type;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Stack;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -46,6 +47,10 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
+
+        $img_path = Storage::put("uploads", $data['image']);
+        $data['image'] = $img_path;
+
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
@@ -89,10 +94,12 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $valid_request = $request->validated();
-        $project->fill($valid_request);
+        $data = $request->validated();
+        $img_path = Storage::put("uploads", $data['image']);
+        $data['image'] = $img_path;
+        $project->fill($data);
         $project->save();
-        $project->stacks()->sync($valid_request['stacks']);
+        $project->stacks()->sync($data['stacks']);
 
         return to_route('admin.projects.show', $project);
     }

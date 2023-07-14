@@ -21,7 +21,7 @@ class ProjectSeeder extends Seeder
             $newProject = new Project();
             $newProject->name = $faker->domainName();
             $newProject->description = $faker->paragraphs(5, true);
-            $newProject->image = "https://picsum.photos//600/600?random=1" . rand(1, 100);
+            $newProject->image = "placeholders/image-not-available.jpg";
             $newProject->link = $faker->url();
             $newProject->save();
         }
